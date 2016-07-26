@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="fill_parent"
+>
+
+    <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:id="@+id/imageView" android:src="@android:drawable/sym_def_app_icon"
+            android:contentDescription="icon" android:layout_gravity="center"
+            android:padding="5dp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" android:visibility="visible">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="center_vertical" android:id="@+id/textLayout"
+                android:paddingLeft="10dp" android:paddingRight="10dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:id="@+id/textViewTitle" android:textSize="18sp" android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Desciption"
+                    android:id="@+id/textViewDescription" android:textSize="12sp"
+                    android:fontFamily="sans-serif-condensed"/>
+        </LinearLayout>
+        <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/VolumeSeekBar"
+                android:visibility="invisible" android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+    <ToggleButton
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:id="@+id/toggleButton" android:layout_gravity="center"
+            android:textSize="12sp" android:fontFamily="sans-serif-condensed"/>
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Noizer</string>
+    <string name="action_exit">Выход</string>
+    <string name="off">Выкл</string>
+    <string name="on">Вкл</string>
+</resources>
