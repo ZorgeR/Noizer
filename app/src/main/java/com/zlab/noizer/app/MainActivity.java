@@ -46,9 +46,14 @@ public class MainActivity extends Activity {
         list.add(new ListViewItem(mContext, "Белый шум", "Успокоит вашего ребенка", R.raw.whitenoise, "raw/whitenoise.ogg", false, 25, R.drawable.whitenoise));
         list.add(new ListViewItem(mContext, "Ветер", "Меланхолия", R.raw.wind, "raw/wind.ogg", false, 25, R.drawable.wind));
         list.add(new ListViewItem(mContext, "Дождь", "Расслабляет", R.raw.rain, "raw/rain.ogg", false, 25, R.drawable.rain));
+        list.add(new ListViewItem(mContext, "Гроза", "Будьте бдительны", R.raw.storm, "raw/storm.ogg", false, 25, R.drawable.storm));
+        list.add(new ListViewItem(mContext, "Камин", "Истинное наслаждение", R.raw.fireplace, "raw/fireplace.ogg", false, 25, R.drawable.fireplace));
+        list.add(new ListViewItem(mContext, "Птицы в парке", "Получайте удовольствие", R.raw.birds, "raw/birds.ogg", false, 25, R.drawable.birds));
         list.add(new ListViewItem(mContext, "Шумная улица", "Кого нибудь может успокоить", R.raw.street, "raw/street.ogg", false, 25, R.drawable.street));
         list.add(new ListViewItem(mContext, "Бар", "Многим помогает", R.raw.bar, "raw/bar.ogg", false, 25, R.drawable.bar));
         list.add(new ListViewItem(mContext, "Волны", "Закройте глаза, оденьте наушники", R.raw.waves, "raw/waves.ogg", false, 25, R.drawable.waves));
+        list.add(new ListViewItem(mContext, "Листья на ветру", "Садитесь и слушайте", R.raw.foliage, "raw/foliage.ogg", false, 25, R.drawable.foliage));
+        list.add(new ListViewItem(mContext, "Поезд", "Чу-чух-Чу-чух", R.raw.train, "raw/train.ogg", false, 25, R.drawable.train));
 
         return list;
     }
