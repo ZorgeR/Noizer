@@ -4,15 +4,19 @@
       tools:context=".MainActivity">
     <item android:id="@+id/action_exit"
           android:title="@string/action_exit"
-          android:orderInCategory="110"
+          android:orderInCategory="103"
           app:showAsAction="never"/>
     <item  android:id="@+id/action_contact"
            android:title="@string/action_contact"
-           android:orderInCategory="105"
+           android:orderInCategory="101"
            app:showAsAction="never"/>
     <item  android:id="@+id/action_about"
            android:title="@string/action_about"
-           android:orderInCategory="108"
+           android:orderInCategory="102"
+           app:showAsAction="never"/>
+    <item  android:id="@+id/action_turn_off_all"
+           android:title="@string/action_turn_off_all"
+           android:orderInCategory="100"
            app:showAsAction="never"/>
 
 </menu>

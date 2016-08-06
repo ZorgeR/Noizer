@@ -116,6 +116,8 @@ public class MainActivity extends Activity {
             aboutDialog.show();
 
             ((TextView)aboutDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        } else if (id == R.id.action_turn_off_all){
+            stopAllSound();
         }
 
         return super.onOptionsItemSelected(item);
@@ -125,6 +127,7 @@ public class MainActivity extends Activity {
         for(int i=0;i<listAdaptor.getCount();i++){
             listAdaptor.getItem(i).stopPlaying();
         }
+        listAdaptor.notifyDataSetChanged();
     }
 
     @Override
