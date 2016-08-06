@@ -92,7 +92,6 @@ public class MainActivity extends Activity {
             startActivity(Intent.createChooser(intent, ""));
             return true;
         } else if (id == R.id.action_about){
-
             PackageManager manager = getPackageManager();
             PackageInfo info = null;
             String version = "Can't identify";
@@ -119,7 +118,6 @@ public class MainActivity extends Activity {
         } else if (id == R.id.action_turn_off_all){
             stopAllSound();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
