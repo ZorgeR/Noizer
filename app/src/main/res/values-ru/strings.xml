@@ -4,4 +4,36 @@
     <string name="action_exit">Выход</string>
     <string name="off">Выкл</string>
     <string name="on">Вкл</string>
+    <string name="action_contact">Обратная связь</string>
+    <string name="sound_title_whitenoise">Белый шум</string>
+    <string name="sound_title_brownnoise">Коричневый шум</string>
+    <string name="sound_title_intrauterine">Внутриутробные звуки</string>
+    <string name="sound_title_wind">Ветер</string>
+    <string name="sound_title_storm">Гроза</string>
+    <string name="sound_title_rain">Дождь</string>
+    <string name="sound_title_fireplace">Камин</string>
+    <string name="sound_title_birds">Птицы в парке</string>
+    <string name="sound_title_train">Поезд</string>
+    <string name="sound_title_street">Шумная улица</string>
+    <string name="sound_title_bar">Бар</string>
+    <string name="sound_title_waves">Волны</string>
+    <string name="sound_title_foliage">Листья на ветру</string>
+    <string name="sound_description_intrauterine">Знакомая младенцу атмосфера</string>
+    <string name="sound_description_whitenoise">Успокоит вашего ребенка</string>
+    <string name="sound_description_brownnoise">Успокоит и вас</string>
+    <string name="sound_description_wind">Меланхолия</string>
+    <string name="sound_description_rain">Расслабляет</string>
+    <string name="sound_description_street">Кого нибудь может успокоить</string>
+    <string name="sound_description_storm">Будьте бдительны</string>
+    <string name="sound_description_fireplace">Истинное наслаждение</string>
+    <string name="sound_description_birds">Получайте удовольствие</string>
+    <string name="sound_description_bar">Многим помогает</string>
+    <string name="sound_description_waves">Закройте глаза, наденьте наушники</string>
+    <string name="sound_description_foliage">Садитесь и слушайте</string>
+    <string name="sound_description_train">Чу-чух-Чу-чух</string>
+    <string name="action_about">О программе</string>
+    <string name="action_about_title">О программе</string>
+    <string name="action_about_description">Noizer - менеджер шума с открытым исходным кодом.\r\n\r\nБудем рады вашим
+        комментариям, через форму обратной связи доступную через меню.\r\n\r\nИсходный код:\r\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\r\n\r\n
+    </string>
 </resources>
