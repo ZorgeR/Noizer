@@ -13,7 +13,7 @@ public class ListViewCustomAdaptor extends ArrayAdapter<ListViewItem> {
     private int id;
     private List<ListViewItem> items;
 
-    public ListViewCustomAdaptor(Context context, int resource, List<ListViewItem> objects) {
+    ListViewCustomAdaptor(Context context, int resource, List<ListViewItem> objects) {
         super(context, resource, objects);
         c = context;
         id = resource;
@@ -21,68 +21,81 @@ public class ListViewCustomAdaptor extends ArrayAdapter<ListViewItem> {
     }
 
     @Override
-    public View getView(final int position, View view, final ViewGroup parent) {
-        LayoutInflater vi = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = vi.inflate(id, parent, false);
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        ListViewHolder mViewHolder;
 
-        final ListViewItem o = items.get(position);
+        if (convertView == null) {
+            mViewHolder = new ListViewHolder();
 
-        if (o != null) {
-            final LinearLayout textLayout = (LinearLayout) v.findViewById(R.id.textLayout);
+            LayoutInflater vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = vi.inflate(id, parent, false);
 
-            final ImageView Image = (ImageView) v.findViewById(R.id.imageView);
-            Image.setImageResource(o.getImageResID());
+            mViewHolder.textLayout = (LinearLayout) convertView.findViewById(R.id.textLayout);
+            mViewHolder.Image = (ImageView) convertView.findViewById(R.id.imageView);
+            mViewHolder.Title = (TextView) convertView.findViewById(R.id.textViewTitle);
+            mViewHolder.Description = (TextView) convertView.findViewById(R.id.textViewDescription);
+            mViewHolder.volumeBar = (SeekBar) convertView.findViewById(R.id.VolumeSeekBar);
+            mViewHolder.OnOff = (ToggleButton) convertView.findViewById(R.id.toggleButton);
 
-            final TextView Title = (TextView) v.findViewById(R.id.textViewTitle);
-            Title.setText(o.getTitle());
-
-            final TextView Description = (TextView) v.findViewById(R.id.textViewDescription);
-            Description.setText(o.getDescription());
-
-            final SeekBar volumeBar = (SeekBar) v.findViewById(R.id.VolumeSeekBar);
-            volumeBar.setProgress(o.getVolume());
-
-            final ToggleButton OnOff = (ToggleButton) v.findViewById(R.id.toggleButton);
-            OnOff.setText(R.string.off);
-
-            if(o.getIsPlaying()){
-                volumeBar.setVisibility(View.VISIBLE);
-                textLayout.setVisibility(View.GONE);
-                OnOff.setText(R.string.on);
-                OnOff.setChecked(true);
-            }
-
-            OnOff.setOnClickListener(new View.OnClickListener() {
+            final ListViewHolder finalMViewHolder = mViewHolder;
+            mViewHolder.OnOff.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    if(OnOff.isChecked()){
-                        volumeBar.setVisibility(View.VISIBLE);
-                        textLayout.setVisibility(View.GONE);
-                        OnOff.setText(R.string.on);
-                        o.startPlaying();
+                public void onClick(View view) {
+                    if (finalMViewHolder.OnOff.isChecked()) {
+                        finalMViewHolder.volumeBar.setVisibility(View.VISIBLE);
+                        finalMViewHolder.textLayout.setVisibility(View.GONE);
+                        finalMViewHolder.OnOff.setText(R.string.on);
+                        finalMViewHolder.Item.startPlaying();
+                        finalMViewHolder.volumeBar.setProgress(finalMViewHolder.Item.getVolume());
                     } else {
-                        volumeBar.setVisibility(View.GONE);
-                        textLayout.setVisibility(View.VISIBLE);
-                        OnOff.setText(R.string.off);
-                        o.stopPlaying();
+                        finalMViewHolder.volumeBar.setVisibility(View.GONE);
+                        finalMViewHolder.textLayout.setVisibility(View.VISIBLE);
+                        finalMViewHolder.OnOff.setText(R.string.off);
+                        finalMViewHolder.Item.stopPlaying();
                     }
                 }
             });
 
-            volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            mViewHolder.volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    o.setVolume(progress);
+                    finalMViewHolder.Item.setVolume(progress);
                 }
+
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
                 }
+
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                 }
             });
+
+            convertView.setTag(mViewHolder);
+        } else {
+            mViewHolder = (ListViewHolder) convertView.getTag();
         }
 
-        return v;
+        mViewHolder.Item = items.get(position);
+
+        mViewHolder.Image.setImageResource(mViewHolder.Item.getImageResID());
+        mViewHolder.Title.setText(mViewHolder.Item.getTitle());
+        mViewHolder.Description.setText(mViewHolder.Item.getDescription());
+
+        if (mViewHolder.Item.getIsPlaying()) {
+            mViewHolder.volumeBar.setVisibility(View.VISIBLE);
+            mViewHolder.textLayout.setVisibility(View.GONE);
+            mViewHolder.OnOff.setChecked(true);
+            mViewHolder.OnOff.setText(R.string.on);
+            mViewHolder.volumeBar.setProgress(mViewHolder.Item.getVolume());
+        } else {
+            mViewHolder.volumeBar.setVisibility(View.GONE);
+            mViewHolder.textLayout.setVisibility(View.VISIBLE);
+            mViewHolder.OnOff.setChecked(false);
+            mViewHolder.OnOff.setText(R.string.off);
+        }
+
+        return convertView;
     }
 }
+

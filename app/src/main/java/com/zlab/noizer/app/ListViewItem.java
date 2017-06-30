@@ -6,7 +6,8 @@ import android.media.MediaPlayer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ListViewItem {
+@SuppressWarnings("unused")
+class ListViewItem {
 
     private String Title;
     private String Description;
@@ -20,30 +21,30 @@ public class ListViewItem {
     private MediaPlayer mediaPlayer2;
     private Context mContext;
 
-    private long mkLoopingPreview = 1;
     private Timer loopTimer;
-    private TimerTask loopTask;
 
-    public ListViewItem (Context c, String title, String description, int soundResID, String soundName, boolean isPlaying, int volume, int imageResID){
+    ListViewItem(Context c, String title, String description, int soundResID, String soundsName, boolean isPlaying, int volume, int imageResID) {
         Title = title;
         Description = description;
         SoundResID = soundResID;
-        this.SoundName = soundName;
+        SoundName = soundsName;
         IsPlaying = isPlaying;
         Volume = volume;
         ImageResID = imageResID;
         mContext = c;
     }
 
-    public void startPlaying() {
+    void startPlaying() {
         stopPlaying();
+
         mediaPlayer1 = MediaPlayer.create(mContext, SoundResID);
         mediaPlayer2 = MediaPlayer.create(mContext, SoundResID);
 
         loopTimer = new Timer();
-        loopTask = new TimerTask() {
-            @Override public void run() {
-                if(mediaPlayer1 !=null && mediaPlayer2 !=null) {
+        TimerTask loopTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (mediaPlayer1 != null && mediaPlayer2 != null) {
                     if (mediaPlayer1.isPlaying()) {
                         mediaPlayer2.start();
                     } else if (mediaPlayer2.isPlaying()) {
@@ -53,7 +54,8 @@ public class ListViewItem {
             }
         };
 
-        long waitingTime = mediaPlayer1.getDuration()-mkLoopingPreview;
+        long mkLoopingPreview = 1;
+        long waitingTime = mediaPlayer1.getDuration() - mkLoopingPreview;
         loopTimer.schedule(loopTask, waitingTime, waitingTime);
 
         setPlayerVolume();
@@ -61,7 +63,7 @@ public class ListViewItem {
         setIsPlaying(true);
     }
 
-    public void stopPlaying() {
+    void stopPlaying() {
         if (mediaPlayer1 != null && mediaPlayer2 != null) {
             mediaPlayer1.release();
             mediaPlayer2.release();
@@ -73,48 +75,66 @@ public class ListViewItem {
         setIsPlaying(false);
     }
 
-    private void setPlayerVolume(){
+    private void setPlayerVolume() {
         float floatVolume = Volume / 100f;
-        mediaPlayer1.setVolume(floatVolume,floatVolume);
-        mediaPlayer2.setVolume(floatVolume,floatVolume);
+        mediaPlayer1.setVolume(floatVolume, floatVolume);
+        mediaPlayer2.setVolume(floatVolume, floatVolume);
     }
 
-    public String getTitle() {
+    String getTitle() {
         return Title;
     }
-    public void setTitle(String title) {
+
+    void setTitle(String title) {
         Title = title;
     }
-    public String getDescription() {
+
+    String getDescription() {
         return Description;
     }
-    public void setDescription(String description) {
+
+    void setDescription(String description) {
         Description = description;
     }
-    public int getSoundResID() {
+
+    int getSoundResID() {
         return SoundResID;
     }
-    public void setSoundResID(int sound_res_ID) {
+
+    void setSoundResID(int sound_res_ID) {
         SoundResID = sound_res_ID;
     }
-    public boolean getIsPlaying() {
+
+    boolean getIsPlaying() {
         return IsPlaying;
     }
-    public void setIsPlaying(boolean is_playing) {
+
+    private void setIsPlaying(boolean is_playing) {
         IsPlaying = is_playing;
     }
-    public int getVolume() {
+
+    int getVolume() {
         return Volume;
     }
-    public void setVolume(int volume) {
+
+    void setVolume(int volume) {
         Volume = volume;
         setPlayerVolume();
     }
-    public int getImageResID() {
+
+    int getImageResID() {
         return ImageResID;
     }
-    public void setImageResID(int image_res_ID) {
+
+    void setImageResID(int image_res_ID) {
         ImageResID = image_res_ID;
     }
 
+    String getSoundName() {
+        return SoundName;
+    }
+
+    void setSoundName(String soundName) {
+        SoundName = soundName;
+    }
 }

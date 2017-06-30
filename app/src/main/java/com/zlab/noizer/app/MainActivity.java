@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -22,13 +23,21 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    private ListView listview;
-    private List<ListViewItem> listObjects;
     private ListViewCustomAdaptor listAdaptor;
     private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String theme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme_switch", "light");
+
+        if (theme.equals("light")) {
+            setTheme(R.style.AppThemeLight);
+        } else if (theme.equals("dark")) {
+            setTheme(R.style.AppThemeDark);
+        } else if (theme.equals("black")) {
+            setTheme(R.style.AppThemeBlack);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -41,15 +50,15 @@ public class MainActivity extends Activity {
         super.onConfigurationChanged(newConfig);
     }
 
-    private void renderList(){
-        listview = (ListView) findViewById(R.id.listView);
-        listObjects = getItemsList();
+    private void renderList() {
+        ListView listview = (ListView) findViewById(R.id.listView);
+        List<ListViewItem> listObjects = getItemsList();
 
         listAdaptor = new ListViewCustomAdaptor(this, R.layout.rowlayout, listObjects);
         listview.setAdapter(listAdaptor);
     }
 
-    private List<ListViewItem> getItemsList(){
+    private List<ListViewItem> getItemsList() {
         List<ListViewItem> list = new ArrayList<ListViewItem>();
 
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_whitenoise), getResources().getString(R.string.sound_description_whitenoise), R.raw.whitenoise, "raw/whitenoise.ogg", false, 25, R.drawable.noise));
@@ -83,15 +92,15 @@ public class MainActivity extends Activity {
             stopAllSound();
             this.finish();
             return true;
-        } else if (id == R.id.action_contact){
+        } else if (id == R.id.action_contact) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("plain/text");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "zorg.rhrd@gmail.com" });
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"zorg.rhrd@gmail.com"});
             intent.putExtra(Intent.EXTRA_SUBJECT, "Noizer app request");
             intent.putExtra(Intent.EXTRA_TEXT, "Your text here");
             startActivity(Intent.createChooser(intent, ""));
             return true;
-        } else if (id == R.id.action_about){
+        } else if (id == R.id.action_about) {
             PackageManager manager = getPackageManager();
             PackageInfo info = null;
             String version = "Can't identify";
@@ -100,11 +109,11 @@ public class MainActivity extends Activity {
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-            if(info!=null){
+            if (info != null) {
                 version = info.versionName;
             }
 
-            final SpannableString msg = new SpannableString(getResources().getString(R.string.action_about_description)+"Build: "+version);
+            final SpannableString msg = new SpannableString(getResources().getString(R.string.action_about_description) + "Build: " + version);
             Linkify.addLinks(msg, Linkify.ALL);
 
             final AlertDialog aboutDialog = new AlertDialog.Builder(this)
@@ -114,25 +123,25 @@ public class MainActivity extends Activity {
                     .create();
             aboutDialog.show();
 
-            ((TextView)aboutDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-        } else if (id == R.id.action_turn_off_all){
+            ((TextView) aboutDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        } else if (id == R.id.action_settings) {
+            startActivity(new Intent(this, Preferences.class));
+        } else if (id == R.id.action_turn_off_all) {
             stopAllSound();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void stopAllSound(){
-        for(int i=0;i<listAdaptor.getCount();i++){
+    private void stopAllSound() {
+        for (int i = 0; i < listAdaptor.getCount(); i++) {
             listAdaptor.getItem(i).stopPlaying();
         }
         listAdaptor.notifyDataSetChanged();
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
-        {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             this.moveTaskToBack(true);
             return true;
         }

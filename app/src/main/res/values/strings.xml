@@ -5,7 +5,9 @@
     <string name="action_about">About</string>
     <string name="action_turn_off_all">Turn off all sounds</string>
     <string name="action_about_title">About</string>
-    <string name="action_about_description">Noizer - open source noise manager.\r\n\r\nFeel free to send feedback from menu.\r\n\r\nSource code:\r\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\r\n\r\n</string>
+    <string name="action_about_description">Noizer - open source noise manager.\r\n\r\nFeel free to send feedback from
+        menu.\r\n\r\nSource code:\r\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\r\n\r\n
+    </string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <!-- Title -->
@@ -28,7 +30,7 @@
     <string name="sound_description_intrauterine">The familiar atmosphere of the baby</string>
     <string name="sound_description_wind">Melancholy</string>
     <string name="sound_description_rain">Relaxes</string>
-    <string name="sound_description_storm">Be carefull</string>
+    <string name="sound_description_storm">Be careful</string>
     <string name="sound_description_fireplace">Pure pleasure</string>
     <string name="sound_description_birds">Enjoy</string>
     <string name="sound_description_street">Who can soothe a</string>
@@ -36,5 +38,11 @@
     <string name="sound_description_waves">Close your eyes, put on your headphones</string>
     <string name="sound_description_foliage">Sit down and listen to</string>
     <string name="sound_description_train">Choo-choo-choo-Choo</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="action_settings">Settings</string>
+    <string name="restart_needed">Please close application to apply settings</string>
+    <!-- Strings related to Settings -->
+
 
 </resources>

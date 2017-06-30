@@ -1,0 +1,7 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+            android:defaultValue="light"
+            android:title="@string/pref_theme_title" android:entries="@array/themes_titles"
+            android:key="theme_switch" android:entryValues="@array/themes_values"/>
+</PreferenceScreen>

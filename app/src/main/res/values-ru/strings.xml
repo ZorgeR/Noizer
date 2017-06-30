@@ -37,4 +37,8 @@
     <string name="sound_description_waves">Закройте глаза, наденьте наушники</string>
     <string name="sound_description_foliage">Садитесь и слушайте</string>
     <string name="sound_description_train">Чу-чух-Чу-чух</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="pref_theme_title">Тема оформления</string>
+    <string name="action_settings">Настройки</string>
+    <string name="restart_needed">Полностью закройте приложение для применения изменений</string>
 </resources>
