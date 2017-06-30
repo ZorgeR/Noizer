@@ -2,6 +2,7 @@ package com.zlab.noizer.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.IntentCompat;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -25,18 +27,13 @@ public class MainActivity extends Activity {
 
     private ListViewCustomAdaptor listAdaptor;
     private Context mContext;
+    static boolean needRestart = false;
+    static String theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String theme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme_switch", "light");
-
-        if (theme.equals("light")) {
-            setTheme(R.style.AppThemeLight);
-        } else if (theme.equals("dark")) {
-            setTheme(R.style.AppThemeDark);
-        } else if (theme.equals("black")) {
-            setTheme(R.style.AppThemeBlack);
-        }
+        theme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme_switch", "default_light");
+        changeTheme(theme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -48,6 +45,15 @@ public class MainActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (needRestart) {
+            needRestart = false;
+            restartActivity();
+        }
     }
 
     private void renderList() {
@@ -139,6 +145,24 @@ public class MainActivity extends Activity {
         listAdaptor.notifyDataSetChanged();
     }
 
+    private void changeTheme(String newTheme) {
+        if (newTheme.equals("material")) {
+            setTheme(R.style.Theme_Material);
+        } else if (newTheme.equals("material_light")) {
+            setTheme(R.style.Theme_MaterialLight);
+        } else if (newTheme.equals("material_black") ||
+                   newTheme.equals("material_black_color") ||
+                   newTheme.equals("material_black_monochrome")) {
+            setTheme(R.style.Theme_MaterialBlack);
+        } else if (newTheme.equals("holo")) {
+            setTheme(R.style.Theme_Holo);
+        } else if (newTheme.equals("holo_light")) {
+            setTheme(R.style.Theme_HoloLight);
+        } else {
+            setTheme(R.style.Theme_DefaultLight);
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -148,5 +172,14 @@ public class MainActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-
+    private void restartActivity() {
+        ComponentName componentName;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.CUPCAKE) {
+            componentName = getPackageManager().getLaunchIntentForPackage("com.zlab.noizer.app").getComponent();
+            Intent intent = IntentCompat.makeRestartActivityTask(componentName);
+            stopAllSound();
+            startActivity(intent);
+            this.finish();
+        }
+    }
 }

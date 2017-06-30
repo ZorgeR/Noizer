@@ -1,6 +1,7 @@
 package com.zlab.noizer.app;
 
 import android.content.Context;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +78,15 @@ public class ListViewCustomAdaptor extends ArrayAdapter<ListViewItem> {
         }
 
         mViewHolder.Item = items.get(position);
-
         mViewHolder.Image.setImageResource(mViewHolder.Item.getImageResID());
+
+        if (    MainActivity.theme.equals("material") ||
+                MainActivity.theme.equals("holo") ||
+                MainActivity.theme.equals("material_black_color") ||
+                MainActivity.theme.equals("material_black_monochrome")) {
+            mViewHolder.Image = darkThemeFilter(mViewHolder.Image);
+        }
+
         mViewHolder.Title.setText(mViewHolder.Item.getTitle());
         mViewHolder.Description.setText(mViewHolder.Item.getDescription());
 
@@ -96,6 +104,43 @@ public class ListViewCustomAdaptor extends ArrayAdapter<ListViewItem> {
         }
 
         return convertView;
+    }
+
+    private ImageView darkThemeFilter(ImageView iv) {
+        float[] negativeForHolo = {
+                -1.0f, -0.5f, -0.5f, 0, 255,
+                -0.25f, -1.0f, 0, 0, 255,
+                0, 0, -1.0f, 0, 255,
+                0, 0, 0, 1.0f, 0
+        };
+        float[] negativeForMaterial = {
+                -1.0f, -0.25f, 0, 0, 255,
+                0, -1.0f, 0, 0, 255,
+                0, 0, -1.0f, 0, 255,
+                0, 0, 0, 1.0f, 0
+        };
+        float[] negativeForMaterialBlackColor = {
+                -1.0f, -0.55f, -0.55f, 0, 255,
+                -0.25f, -1.0f, 0, 0, 255,
+                0, 0, -1.0f, 0, 255,
+                0, 0, 0, 1.0f, 0
+        };
+        float[] negativeForMaterialBlackMonochrome = {
+                -1.0f, -0.25f, -0.25f, 0, 255,
+                -0.25f, -1.0f, 0, 0, 255,
+                0, 0, -1.0f, 0, 255,
+                0, 0, 0, 1.0f, 0
+        };
+        if (MainActivity.theme.equals("material")) {
+            iv.setColorFilter(new ColorMatrixColorFilter(negativeForMaterial));
+        } else if (MainActivity.theme.equals("holo")) {
+            iv.setColorFilter(new ColorMatrixColorFilter(negativeForHolo));
+        } else if (MainActivity.theme.equals("material_black_color")) {
+            iv.setColorFilter(new ColorMatrixColorFilter(negativeForMaterialBlackColor));
+        } else if (MainActivity.theme.equals("material_black_monochrome")) {
+            iv.setColorFilter(new ColorMatrixColorFilter(negativeForMaterialBlackMonochrome));
+        }
+        return iv;
     }
 }
 

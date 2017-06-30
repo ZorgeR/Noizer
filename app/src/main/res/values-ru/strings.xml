@@ -40,5 +40,6 @@
     <string name="title_activity_settings">Настройки</string>
     <string name="pref_theme_title">Тема оформления</string>
     <string name="action_settings">Настройки</string>
-    <string name="restart_needed">Полностью закройте приложение для применения изменений</string>
+    <string name="restart_needed">Приложение будет перезапущено для применения изменений</string>
+    <string name="settings_cat_visual">Внешний вид</string>
 </resources>

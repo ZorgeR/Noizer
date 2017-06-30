@@ -2,11 +2,21 @@
 <resources tools:ignore="MissingTranslation" xmlns:tools="http://schemas.android.com/tools">
     <string-array name="themes_titles" tools:ignore="InconsistentArrays">
         <item>Default Light</item>
+        <item>Material Dark</item>
+        <item>Material Light</item>
+        <item>Material Black</item>
+        <item>Material Black Color</item>
+        <item>Material Black Monochrome</item>
         <item>Holo Dark</item>
         <item>Holo Light</item>
     </string-array>
     <string-array name="themes_values" tools:ignore="InconsistentArrays">
         <item>default_light</item>
+        <item>material</item>
+        <item>material_light</item>
+        <item>material_black</item>
+        <item>material_black_color</item>
+        <item>material_black_monochrome</item>
         <item>holo</item>
         <item>holo_light</item>
     </string-array>

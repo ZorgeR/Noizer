@@ -1,10 +1,8 @@
 package com.zlab.noizer.app;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.widget.PopupMenu;
 import android.widget.Toast;
 
 @SuppressWarnings("deprecation")
@@ -19,6 +17,7 @@ public class Preferences extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 Toast.makeText(getApplicationContext(), R.string.restart_needed, Toast.LENGTH_LONG).show();
+                MainActivity.needRestart = true;
                 return true;
             }
         });

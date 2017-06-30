@@ -1,5 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+            android:title="@string/settings_cat_visual">
+
+    </PreferenceCategory>
     <ListPreference
             android:defaultValue="light"
             android:title="@string/pref_theme_title" android:entries="@array/themes_titles"
