@@ -42,4 +42,6 @@
     <string name="action_settings">Настройки</string>
     <string name="restart_needed">Приложение будет перезапущено для применения изменений</string>
     <string name="settings_cat_visual">Внешний вид</string>
+    <string name="sound_description_catpurpur">Пурр Пурр</string>
+    <string name="sound_title_catpurpur">Кошка</string>
 </resources>

@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
 
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_whitenoise), getResources().getString(R.string.sound_description_whitenoise), R.raw.whitenoise, "raw/whitenoise.ogg", false, 25, R.drawable.noise));
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_brownnoise), getResources().getString(R.string.sound_description_brownnoise), R.raw.brownnoise, "raw/brownnoise.ogg", false, 25, R.drawable.noise));
+        list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_catpurpur), getResources().getString(R.string.sound_description_catpurpur), R.raw.catpurpur, "raw/catpurpur.ogg", false, 25, R.drawable.catpurpur));
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_intrauterine), getResources().getString(R.string.sound_description_intrauterine), R.raw.intrauterine, "raw/intrauterine.ogg", false, 25, R.drawable.intrauterine));
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_wind), getResources().getString(R.string.sound_description_wind), R.raw.wind, "raw/wind.ogg", false, 25, R.drawable.wind));
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_rain), getResources().getString(R.string.sound_description_rain), R.raw.rain, "raw/rain.ogg", false, 25, R.drawable.rain));
@@ -151,8 +152,8 @@ public class MainActivity extends Activity {
         } else if (newTheme.equals("material_light")) {
             setTheme(R.style.Theme_MaterialLight);
         } else if (newTheme.equals("material_black") ||
-                   newTheme.equals("material_black_color") ||
-                   newTheme.equals("material_black_monochrome")) {
+                newTheme.equals("material_black_color") ||
+                newTheme.equals("material_black_monochrome")) {
             setTheme(R.style.Theme_MaterialBlack);
         } else if (newTheme.equals("holo")) {
             setTheme(R.style.Theme_Holo);

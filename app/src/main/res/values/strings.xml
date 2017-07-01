@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Noizer</string>
     <string name="action_exit">Exit</string>
     <string name="action_contact">Feedback</string>
@@ -43,6 +43,8 @@
     <string name="action_settings">Settings</string>
     <string name="restart_needed">Application will restart to apply settings</string>
     <string name="settings_cat_visual">Visual style</string>
+    <string name="sound_description_catpurpur" tools:ignore="Typos">Purr Purr</string>
+    <string name="sound_title_catpurpur">Cat</string>
     <!-- Strings related to Settings -->
 
 
