@@ -1,10 +1,14 @@
 package com.zlab.noizer.app;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.util.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
 
 @SuppressWarnings("unused")
 class ListViewItem {
@@ -17,11 +21,10 @@ class ListViewItem {
     private int ImageResID;
     private String SoundName;
 
-    private MediaPlayer mediaPlayer1;
-    private MediaPlayer mediaPlayer2;
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer mCurrentPlayerLoop;
+    private MediaPlayer mNextPlayerLoop;
     private Context mContext;
-
-    private Timer loopTimer;
 
     ListViewItem(Context c, String title, String description, int soundResID, String soundsName, boolean isPlaying, int volume, int imageResID) {
         Title = title;
@@ -37,48 +40,54 @@ class ListViewItem {
     void startPlaying() {
         stopPlaying();
 
-        mediaPlayer1 = MediaPlayer.create(mContext, SoundResID);
-        mediaPlayer2 = MediaPlayer.create(mContext, SoundResID);
-
-        loopTimer = new Timer();
-        TimerTask loopTask = new TimerTask() {
-            @Override
-            public void run() {
-                if (mediaPlayer1 != null && mediaPlayer2 != null) {
-                    if (mediaPlayer1.isPlaying()) {
-                        mediaPlayer2.start();
-                    } else if (mediaPlayer2.isPlaying()) {
-                        mediaPlayer1.start();
-                    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mCurrentPlayerLoop = MediaPlayer.create(mContext, SoundResID);
+            mCurrentPlayerLoop.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mCurrentPlayerLoop.start();
                 }
-            }
-        };
-
-        long mkLoopingPreview = 1;
-        long waitingTime = mediaPlayer1.getDuration() - mkLoopingPreview;
-        loopTimer.schedule(loopTask, waitingTime, waitingTime);
-
+            });
+            createNextMediaPlayer();
+        } else {
+            mediaPlayer = MediaPlayer.create(mContext, SoundResID);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
         setPlayerVolume();
-        mediaPlayer1.start();
         setIsPlaying(true);
     }
 
     void stopPlaying() {
-        if (mediaPlayer1 != null && mediaPlayer2 != null) {
-            mediaPlayer1.release();
-            mediaPlayer2.release();
-            mediaPlayer1 = null;
-            mediaPlayer2 = null;
-            loopTimer.cancel();
-            loopTimer.purge();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (mCurrentPlayerLoop != null) {
+                mCurrentPlayerLoop.release();
+            }
+            if (mNextPlayerLoop != null) {
+                mNextPlayerLoop.release();
+            }
+        } else {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
         }
         setIsPlaying(false);
     }
 
     private void setPlayerVolume() {
         float floatVolume = Volume / 100f;
-        mediaPlayer1.setVolume(floatVolume, floatVolume);
-        mediaPlayer2.setVolume(floatVolume, floatVolume);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (mCurrentPlayerLoop != null) {
+                mCurrentPlayerLoop.setVolume(floatVolume, floatVolume);
+            }
+            if (mNextPlayerLoop != null) {
+                mNextPlayerLoop.setVolume(floatVolume, floatVolume);
+            }
+        } else {
+            if (mediaPlayer != null) {
+                mediaPlayer.setVolume(floatVolume, floatVolume);
+            }
+        }
     }
 
     String getTitle() {
@@ -137,4 +146,21 @@ class ListViewItem {
     void setSoundName(String soundName) {
         SoundName = soundName;
     }
+
+    @SuppressLint("NewApi")
+    private void createNextMediaPlayer() {
+        mNextPlayerLoop = MediaPlayer.create(mContext, SoundResID);
+        mCurrentPlayerLoop.setNextMediaPlayer(mNextPlayerLoop);
+        mCurrentPlayerLoop.setOnCompletionListener(onCompletionListener);
+        setPlayerVolume();
+    }
+
+    private MediaPlayer.OnCompletionListener onCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            mediaPlayer.release();
+            mCurrentPlayerLoop = mNextPlayerLoop;
+            createNextMediaPlayer();
+        }
+    };
 }
