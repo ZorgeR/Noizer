@@ -6,9 +6,7 @@
     <string name="action_about">О программе</string>
     <string name="action_turn_off_all">Выкл. все звуки</string>
     <string name="action_about_title">О программе</string>
-    <string name="action_about_description">Noizer - менеджер шума с открытым исходным кодом.\r\n\r\nБудем рады вашим
-        комментариям, через форму обратной связи доступную через меню.\r\n\r\nИсходный код:\r\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\r\n\r\n
-    </string>
+    <string name="action_about_description">"Noizer - менеджер шума с открытым исходным кодом.\nБудем рады вашим\n        комментариям, через форму обратной связи доступную через меню.\n\nИсходный код:\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\n\n\n    "</string>
     <string name="off">Выкл</string>
     <string name="on">Вкл</string>
     <string name="sound_title_whitenoise">Белый шум</string>
@@ -44,4 +42,16 @@
     <string name="settings_cat_visual">Внешний вид</string>
     <string name="sound_description_catpurpur">Пурр Пурр</string>
     <string name="sound_title_catpurpur">Кошка</string>
+    <string name="action_timer">Таймер</string>
+    <string name="action_timer_15min">15 мин</string>
+    <string name="action_timer_30min">30 мин</string>
+    <string name="action_timer_45min">45 мин</string>
+    <string name="action_timer_5min">5 мин</string>
+    <string name="action_timer_60min">60 мин</string>
+    <string name="action_timer_set">"Таймер установлен на "</string>
+    <string name="action_timer_remain">"Осталось "</string>
+    <string name="sec">сек</string>
+    <string name="action_timer_cancel">Отменить таймер</string>
+    <string name="action_timer_canceled">Таймер отменен</string>
+    <string name="min">мин</string>
 </resources>

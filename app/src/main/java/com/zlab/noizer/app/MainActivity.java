@@ -9,19 +9,22 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
-import android.support.v4.content.IntentCompat;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends Activity {
 
@@ -29,10 +32,14 @@ public class MainActivity extends Activity {
     private Context mContext;
     static boolean needRestart = false;
     static String theme;
+    static CountDownTimer timer;
+    static long timeLeft;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         theme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme_switch", "default_light");
+        assert theme != null;
         changeTheme(theme);
 
         super.onCreate(savedInstanceState);
@@ -57,7 +64,7 @@ public class MainActivity extends Activity {
     }
 
     private void renderList() {
-        ListView listview = (ListView) findViewById(R.id.listView);
+        ListView listview = findViewById(R.id.listView);
         List<ListViewItem> listObjects = getItemsList();
 
         listAdaptor = new ListViewCustomAdaptor(this, R.layout.rowlayout, listObjects);
@@ -65,7 +72,7 @@ public class MainActivity extends Activity {
     }
 
     private List<ListViewItem> getItemsList() {
-        List<ListViewItem> list = new ArrayList<ListViewItem>();
+        List<ListViewItem> list = new ArrayList<>();
 
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_whitenoise), getResources().getString(R.string.sound_description_whitenoise), R.raw.whitenoise, "raw/whitenoise.ogg", false, 25, R.drawable.noise));
         list.add(new ListViewItem(mContext, getResources().getString(R.string.sound_title_brownnoise), getResources().getString(R.string.sound_description_brownnoise), R.raw.brownnoise, "raw/brownnoise.ogg", false, 25, R.drawable.noise));
@@ -87,15 +94,87 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        //menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        if(timer == null){
+            for (int i = 0; i<=4; i++){
+                menu.getItem(0).getSubMenu().getItem(i).setVisible(true);
+            }
+            menu.getItem(0).getSubMenu().getItem(5).setVisible(false);
+        } else {
+            for (int i = 0; i<=4; i++){
+                menu.getItem(0).getSubMenu().getItem(i).setVisible(false);
+            }
+            menu.getItem(0).getSubMenu().getItem(5).setVisible(true);
+        }
+
         return true;
+    }
+
+    private void action_timer(int min, String timerText){
+        int sec = min*60;
+
+        if(timer != null) {
+            timer.cancel();
+        }
+
+        timer = new CountDownTimer(sec*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+            }
+
+            @Override
+            public void onFinish() {
+                stopAllSound();
+                timer = null;
+                invalidateOptionsMenu();
+                ((Activity) mContext).finish();
+            }
+        }.start();
+        Toast.makeText(this, getResources().getString(R.string.action_timer_set) + timerText, Toast.LENGTH_SHORT).show();
+        invalidateOptionsMenu();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_exit) {
+        if (id == R.id.action_timer){
+            if(timer != null) {
+                String time = (timeLeft /1000) + " " + getResources().getString(R.string.sec);
+
+                if ((timeLeft /1000) > 60) {
+                    time = (timeLeft /1000/60) + " " + getResources().getString(R.string.min);
+                }
+                Toast.makeText(this, getResources().getString(R.string.action_timer_remain) + time, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (id == R.id.action_timer_5min){
+            action_timer(5, getResources().getString(R.string.action_timer_5min));
+            return true;
+        } else if (id == R.id.action_timer_15min){
+            action_timer(15, getResources().getString(R.string.action_timer_15min));
+            return true;
+        } else if (id == R.id.action_timer_30min){
+            action_timer(30, getResources().getString(R.string.action_timer_30min));
+            return true;
+        } else if (id == R.id.action_timer_45min){
+            action_timer(45, getResources().getString(R.string.action_timer_45min));
+            return true;
+        } else if (id == R.id.action_timer_60min) {
+            action_timer(60, getResources().getString(R.string.action_timer_60min));
+            return true;
+        } else if (id == R.id.action_timer_cancel){
+            timer.cancel();
+            timer = null;
+            invalidateOptionsMenu();
+            Toast.makeText(this, getResources().getString(R.string.action_timer_canceled), Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_exit) {
             stopAllSound();
             this.finish();
             return true;
@@ -141,26 +220,33 @@ public class MainActivity extends Activity {
 
     private void stopAllSound() {
         for (int i = 0; i < listAdaptor.getCount(); i++) {
-            listAdaptor.getItem(i).stopPlaying();
+            Objects.requireNonNull(listAdaptor.getItem(i)).stopPlaying();
         }
         listAdaptor.notifyDataSetChanged();
     }
 
     private void changeTheme(String newTheme) {
-        if (newTheme.equals("material")) {
-            setTheme(R.style.Theme_Material);
-        } else if (newTheme.equals("material_light")) {
-            setTheme(R.style.Theme_MaterialLight);
-        } else if (newTheme.equals("material_black") ||
-                newTheme.equals("material_black_color") ||
-                newTheme.equals("material_black_monochrome")) {
-            setTheme(R.style.Theme_MaterialBlack);
-        } else if (newTheme.equals("holo")) {
-            setTheme(R.style.Theme_Holo);
-        } else if (newTheme.equals("holo_light")) {
-            setTheme(R.style.Theme_HoloLight);
-        } else {
-            setTheme(R.style.Theme_DefaultLight);
+        switch (newTheme) {
+            case "material":
+                setTheme(R.style.Theme_Material);
+                break;
+            case "material_light":
+                setTheme(R.style.Theme_MaterialLight);
+                break;
+            case "material_black":
+            case "material_black_color":
+            case "material_black_monochrome":
+                setTheme(R.style.Theme_MaterialBlack);
+                break;
+            case "holo":
+                setTheme(R.style.Theme_Holo);
+                break;
+            case "holo_light":
+                setTheme(R.style.Theme_HoloLight);
+                break;
+            default:
+                setTheme(R.style.Theme_DefaultLight);
+                break;
         }
     }
 
@@ -174,13 +260,12 @@ public class MainActivity extends Activity {
     }
 
     private void restartActivity() {
-        ComponentName componentName;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.CUPCAKE) {
-            componentName = getPackageManager().getLaunchIntentForPackage("com.zlab.noizer.app").getComponent();
-            Intent intent = IntentCompat.makeRestartActivityTask(componentName);
-            stopAllSound();
-            startActivity(intent);
-            this.finish();
-        }
+        Intent intentToBeNewRoot = new Intent(this, MainActivity.class);
+        ComponentName cn = intentToBeNewRoot.getComponent();
+        Intent mainIntent = Intent.makeRestartActivityTask(cn);
+
+        stopAllSound();
+        startActivity(mainIntent);
+        this.finish();
     }
 }

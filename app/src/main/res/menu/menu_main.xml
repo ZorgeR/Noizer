@@ -2,6 +2,33 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_timer"
+        android:title="@string/action_timer"
+        android:orderInCategory="1"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:title="@string/action_timer_5min"
+                android:id="@+id/action_timer_5min" />
+            <item
+                android:title="@string/action_timer_15min"
+                android:id="@+id/action_timer_15min" />
+            <item
+                android:title="@string/action_timer_30min"
+                android:id="@+id/action_timer_30min" />
+            <item
+                android:title="@string/action_timer_45min"
+                android:id="@+id/action_timer_45min" />
+            <item
+                android:title="@string/action_timer_60min"
+                android:id="@+id/action_timer_60min" />
+            <item
+                android:title="@string/action_timer_cancel"
+                android:id="@+id/action_timer_cancel" />
+        </menu>
+    </item>
     <item  android:id="@+id/action_turn_off_all"
            android:title="@string/action_turn_off_all"
            android:orderInCategory="100"

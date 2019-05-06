@@ -5,9 +5,7 @@
     <string name="action_about">About</string>
     <string name="action_turn_off_all">Turn off all sounds</string>
     <string name="action_about_title">About</string>
-    <string name="action_about_description">Noizer - open source noise manager.\r\n\r\nFeel free to send feedback from
-        menu.\r\n\r\nSource code:\r\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\r\n\r\n
-    </string>
+    <string name="action_about_description">"Noizer - open source noise manager.\n\nFeel free to send feedback from\n        menu.\n\nSource code:\n<a href="https://github.com/ZorgeR/Noizer">https://github.com/ZorgeR/Noizer</a>\n\n\n    "</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <!-- Title -->
@@ -45,6 +43,18 @@
     <string name="settings_cat_visual">Visual style</string>
     <string name="sound_description_catpurpur" tools:ignore="Typos">Purr Purr</string>
     <string name="sound_title_catpurpur">Cat</string>
+    <string name="action_timer">Timer</string>
+    <string name="action_timer_5min">5 min</string>
+    <string name="action_timer_15min">15 min</string>
+    <string name="action_timer_30min">30 min</string>
+    <string name="action_timer_45min">45 min</string>
+    <string name="action_timer_60min">60 min</string>
+    <string name="action_timer_set">"Timer set to "</string>
+    <string name="action_timer_remain">Remain</string>
+    <string name="sec">sec</string>
+    <string name="action_timer_cancel">Cancel timer</string>
+    <string name="action_timer_canceled">Timer canceled</string>
+    <string name="min">min</string>
     <!-- Strings related to Settings -->
 
 
